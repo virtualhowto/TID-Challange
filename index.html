@@ -29,4 +29,34 @@
       <h2>What’s in the box?</h2>
       <div id="choices"></div>
       <div id="hint-buttons" class="hidden">
-        <button onclick="showHint(1)">Show Hint
+        <button onclick="showHint(1)">Show Hint 1</button>
+        <button onclick="showHint(2)">Show Hint 2</button>
+      </div>
+      <div id="hint-container" class="hidden">
+        <video id="hintVideo" width="300" controls></video>
+      </div>
+    </div>
+
+    <!-- Success Screen -->
+    <div id="success-screen" class="screen hidden">
+      <h2>✅ Correct!</h2>
+      <img id="itemImage" src="" alt="Item" width="300" />
+      <p id="itemDescription"></p>
+      <button onclick="showLeaderboard()">Leaderboard</button>
+      <button onclick="showScreen('start-screen')">🏠 Home</button>
+    </div>
+
+    <!-- Leaderboard Screen -->
+    <div id="leaderboard-screen" class="screen hidden">
+      <img src="mdcnsw.png" alt="MDCNSW Logo" id="leaderboardLogo" />
+      <h2 class="leaderboardTitle">🏆 Leaderboard</h2>
+      <ul id="leaderboardList"></ul>
+      <button onclick="showScreen('start-screen')">🏠 Home</button>
+    </div>
+
+    <!-- Audio -->
+    <audio id="correctSound" src="correct.mp3"></audio>
+    <audio id="wrongSound" src="wrong.mp3"></audio>
+  </div>
+</body>
+</html>
