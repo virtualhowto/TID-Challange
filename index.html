@@ -1,1 +1,32 @@
-<!DOCTYPE html><html><head><title>TID</title></head><body><h1>TID Placeholder</h1></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TID Challenge - MDCNSW</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- Start Screen -->
+    <div id="start-screen" class="screen">
+      <img src="mdcnsw.png" alt="MDCNSW Logo" id="homeLogo" />
+      <h1>TID Challenge</h1>
+      <p>Scan QR Code or Enter Box ID:</p>
+      <div id="qr-reader" style="width:300px;margin:auto;"></div>
+      <p>Or manually enter:</p>
+      <input type="text" id="boxIdInput" placeholder="Enter Box ID" />
+      <button onclick="startChallenge()">Start</button>
+      <button onclick="showLeaderboard()">Leaderboard</button>
+    </div>
+
+    <!-- Guess Screen -->
+    <div id="guess-screen" class="screen hidden">
+      <h2>What’s in the box?</h2>
+      <div id="choices"></div>
+      <div id="hint-buttons" class="hidden">
+        <button onclick="showHint(1)">Show Hint
