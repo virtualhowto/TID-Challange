@@ -1,0 +1,175 @@
+{
+  "boxes": [
+    {
+      "id": "201",
+      "name": "$2 (Aluminium-Bronze)",
+      "hash": "041e11a27f59d93a26b33aa5cdfe3d2f",
+      "itemImage": "https://example.com/item201.jpg",
+      "description": "$2 (Aluminium-Bronze)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "202",
+      "name": "$1 (Aluminium-Bronze)",
+      "hash": "1dd5c5da3560f1d728f2e02cb14c8f0e",
+      "itemImage": "https://example.com/item202.jpg",
+      "description": "$1 (Aluminium-Bronze)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "203",
+      "name": "50c (Cupro-Nickel)",
+      "hash": "6a2cb026ddbfeb280aafa5a7f7e765ea",
+      "itemImage": "https://example.com/item203.jpg",
+      "description": "50c (Cupro-Nickel)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "204",
+      "name": "20c (Cupro-Nickel)",
+      "hash": "b9b0926ceba501b491045eb863c8c20f",
+      "itemImage": "https://example.com/item204.jpg",
+      "description": "20c (Cupro-Nickel)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "205",
+      "name": "10c (Cupro-Nickel)",
+      "hash": "5cb6d0f4a6b6b366475191fd8b82d93c",
+      "itemImage": "https://example.com/item205.jpg",
+      "description": "10c (Cupro-Nickel)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "206",
+      "name": "5c (Cupro-Nickel)",
+      "hash": "dfe5dd3076f3cc68f61484250225ce81",
+      "itemImage": "https://example.com/item206.jpg",
+      "description": "5c (Cupro-Nickel)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "207",
+      "name": "2c (Bronze)",
+      "hash": "658f0f3b4b0899ebef9cf9eb2312978a",
+      "itemImage": "https://example.com/item207.jpg",
+      "description": "2c (Bronze)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "208",
+      "name": "1c (Bronze)",
+      "hash": "a6144f0fc872d92476abf11721453eed",
+      "itemImage": "https://example.com/item208.jpg",
+      "description": "1c (Bronze)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "209",
+      "name": "1966 Round 50c (80% Silver)",
+      "hash": "2f8d24c7bde6ce87a8b331ab5f785614",
+      "itemImage": "https://example.com/item209.jpg",
+      "description": "1966 Round 50c (80% Silver)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "210",
+      "name": "Florin (Pre-1946, 92.5% Silver)",
+      "hash": "e989b29e6cb9509354631af1af970a79",
+      "itemImage": "https://example.com/item210.jpg",
+      "description": "Florin (Pre-1946, 92.5% Silver)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "211",
+      "name": "Florin (Post-1946, 50% Silver)",
+      "hash": "94589a30f80644536fdc5f914d21d248",
+      "itemImage": "https://example.com/item211.jpg",
+      "description": "Florin (Post-1946, 50% Silver)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "212",
+      "name": "Shilling (Pre-1946, 92.5% Silver)",
+      "hash": "a2f8c0f7e4e5ed8a0a38dbe78e18439d",
+      "itemImage": "https://example.com/item212.jpg",
+      "description": "Shilling (Pre-1946, 92.5% Silver)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "213",
+      "name": "Shilling (Post-1946, 50% Silver)",
+      "hash": "2284213f87c09182cbfbaee19075925f",
+      "itemImage": "https://example.com/item213.jpg",
+      "description": "Shilling (Post-1946, 50% Silver)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "214",
+      "name": "Sixpence (Pre-1946, 92.5% Silver)",
+      "hash": "2b471dd2022659d87a7fe8d88ff71d2a",
+      "itemImage": "https://example.com/item214.jpg",
+      "description": "Sixpence (Pre-1946, 92.5% Silver)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "215",
+      "name": "Sixpence (Post-1946, 50% Silver)",
+      "hash": "3d055c50c3aa1311ee1e2b161192097b",
+      "itemImage": "https://example.com/item215.jpg",
+      "description": "Sixpence (Post-1946, 50% Silver)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "216",
+      "name": "Threepence (Pre-1946, 92.5% Silver)",
+      "hash": "e6b50db63ffcda6efe9cea8e87d2cdb9",
+      "itemImage": "https://example.com/item216.jpg",
+      "description": "Threepence (Pre-1946, 92.5% Silver)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "217",
+      "name": "Threepence (Post-1946, 50% Silver)",
+      "hash": "9dc85c3dcbf4f5a97c9d6fcbaed59074",
+      "itemImage": "https://example.com/item217.jpg",
+      "description": "Threepence (Post-1946, 50% Silver)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "218",
+      "name": "Penny (Bronze)",
+      "hash": "27c88ed94ffaed2e4813c3d72b54bff4",
+      "itemImage": "https://example.com/item218.jpg",
+      "description": "Penny (Bronze)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    },
+    {
+      "id": "219",
+      "name": "Halfpenny (Bronze)",
+      "hash": "b16893de819cb450b33fc1a55e19053c",
+      "itemImage": "https://example.com/item219.jpg",
+      "description": "Halfpenny (Bronze)",
+      "hint1": "https://example.com/hint1.mp4",
+      "hint2": "https://example.com/hint2.mp4"
+    }
+  ]
+}
