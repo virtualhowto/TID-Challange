@@ -1,116 +1,127 @@
-let boxData = {};
-let currentBox = null;
-let guessCount = 0;
+let boxData = [], currentBox = null, guessCount = 0, commonTIDs = {};
 
-async function loadBoxData() {
-  const res = await fetch('data.json');
-  const data = await res.json();
-  boxData = data.boxes;
+async function loadData() {
+  const boxRes = await fetch("data.json");
+  const tidRes = await fetch("CommonTIDs.json");
+  boxData = (await boxRes.json()).boxes;
+  commonTIDs = await tidRes.json();
 }
-loadBoxData();
+loadData();
+
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+}
 
 function startChallenge() {
-  const boxId = document.getElementById('boxIdInput').value.trim();
-  loadChallenge(boxId);
+  const id = document.getElementById("boxIdInput").value.trim();
+  loadChallenge(id);
 }
 
 function loadChallenge(boxId) {
-  currentBox = boxData.find(box => box.id === boxId);
+  currentBox = boxData.find(b => b.id === boxId);
   guessCount = 0;
   if (!currentBox) {
-    alert('Box not found!');
+    alert("Box not found!");
     return;
   }
-  showScreen('guess-screen');
   setupChoices();
+  showScreen("guess-screen");
 }
 
 function setupChoices() {
-  const choicesDiv = document.getElementById('choices');
-  const hintButtons = document.getElementById('hint-buttons');
-  const hintContainer = document.getElementById('hint-container');
-  const hintVideo = document.getElementById('hintVideo');
+  const choicesDiv = document.getElementById("choices");
   choicesDiv.innerHTML = "";
-  hintButtons.classList.add('hidden');
-  hintContainer.classList.add('hidden');
-  hintVideo.src = "";
+  const hintButtons = document.getElementById("hint-buttons");
+  hintButtons.classList.remove("hidden");
+  document.querySelectorAll("#hint-buttons button").forEach(btn => btn.classList.add("hidden"));
+  document.getElementById("hintVideo").src = "";
+  document.getElementById("hint-container").classList.add("hidden");
 
   const options = [currentBox.name];
   while (options.length < 5) {
     const rand = boxData[Math.floor(Math.random() * boxData.length)].name;
     if (!options.includes(rand)) options.push(rand);
   }
-  options.sort(() => Math.random() - 0.5); // shuffle
+  options.sort(() => Math.random() - 0.5);
 
   options.forEach(option => {
-    const btn = document.createElement('button');
+    const btn = document.createElement("button");
     btn.textContent = option;
-    btn.className = "choice";
     btn.onclick = () => checkGuess(option, btn);
     choicesDiv.appendChild(btn);
   });
 }
 
-function checkGuess(selected, button) {
+function checkGuess(choice, button) {
   guessCount++;
-  if (selected === currentBox.name) {
-    document.getElementById('correctSound').play();
-    document.getElementById('itemImage').src = currentBox.itemImage;
-    document.getElementById('itemDescription').textContent = currentBox.description;
+  if (choice === currentBox.name) {
+    document.getElementById("correctSound").play();
+    document.getElementById("itemImage").src = currentBox.itemImage;
+    document.getElementById("itemDescription").innerText = currentBox.description;
     saveResult(currentBox.id, guessCount);
-    showScreen('success-screen');
+    showScreen("success-screen");
   } else {
-    document.getElementById('wrongSound').play();
-    button.classList.add('shake');
-    setTimeout(() => button.classList.remove('shake'), 500);
+    document.getElementById("wrongSound").play();
+    button.classList.add("shake");
+    setTimeout(() => button.classList.remove("shake"), 500);
 
     if (guessCount === 1) {
-      document.getElementById('hint-buttons').classList.remove('hidden');
+      document.querySelector('button[onclick="showHint(1)"]').classList.remove("hidden");
+    } else if (guessCount === 2) {
+      document.querySelector('button[onclick="showHint(2)"]').classList.remove("hidden");
+    } else if (guessCount === 3) {
+      document.querySelector('button[onclick="selectDetectorModel()"]').classList.remove("hidden");
     }
   }
 }
 
 function showHint(number) {
-  const hintContainer = document.getElementById('hint-container');
-  const hintVideo = document.getElementById('hintVideo');
-  hintContainer.classList.remove('hidden');
-  hintVideo.src = number === 1 ? currentBox.hint1 : currentBox.hint2;
+  const video = document.getElementById("hintVideo");
+  video.src = number === 1 ? currentBox.hint1 : currentBox.hint2;
+  document.getElementById("hint-container").classList.remove("hidden");
 }
 
 function saveResult(boxId, guesses) {
-  const results = JSON.parse(localStorage.getItem('results')) || [];
+  const results = JSON.parse(localStorage.getItem("results") || "[]");
   results.push({ boxId, guesses, time: new Date().toISOString() });
-  localStorage.setItem('results', JSON.stringify(results));
+  localStorage.setItem("results", JSON.stringify(results));
 }
 
 function showLeaderboard() {
-  const results = JSON.parse(localStorage.getItem('results')) || [];
+  const results = JSON.parse(localStorage.getItem("results") || "[]");
   results.sort((a, b) => a.guesses - b.guesses);
-  const list = document.getElementById('leaderboardList');
-  list.innerHTML = '';
-  results.forEach(result => {
-    const li = document.createElement('li');
-    li.textContent = `Box ${result.boxId}: ${result.guesses} guesses – ${new Date(result.time).toLocaleString()}`;
+  const list = document.getElementById("leaderboardList");
+  list.innerHTML = "";
+  results.forEach(r => {
+    const li = document.createElement("li");
+    li.textContent = `Box ${r.boxId}: ${r.guesses} guess(es) - ${new Date(r.time).toLocaleString()}`;
     list.appendChild(li);
   });
-  showScreen('leaderboard-screen');
+  showScreen("leaderboard-screen");
 }
 
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-  document.getElementById(id).classList.add('active');
+function selectDetectorModel() {
+  showScreen("model-screen");
+  document.getElementById("tidResult").innerText = "";
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function showTID(modelKey) {
+  const coinName = currentBox.name.toLowerCase().replace(/[^\w]+/g, "_");
+  const match = Object.entries(commonTIDs).find(([key]) => coinName.includes(key));
+  const tid = match?.[1]?.[modelKey] || "No TID available for this detector.";
+  document.getElementById("tidResult").innerText = `Expected TID for ${modelKey.replace(/_/g, " ")}: ${tid}`;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
   const qrScanner = new Html5Qrcode("qr-reader");
   qrScanner.start(
     { facingMode: "environment" },
     { fps: 10, qrbox: 250 },
-    qrCodeMessage => {
+    (decodedText) => {
       qrScanner.stop();
-      loadChallenge(qrCodeMessage.trim());
+      loadChallenge(decodedText.trim());
     },
-    errorMessage => {}
+    (errorMessage) => {}
   ).catch(err => console.error(err));
 });
