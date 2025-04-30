@@ -95,3 +95,11 @@ input, button {
   90%  { transform: translate(1px, 2px) rotate(0deg); }
   100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
+
+.logo {
+  width: 60vw;         /* 60% of the viewport width */
+  max-width: 300px;    /* never larger than 300px */
+  height: auto;
+  display: block;
+  margin: 20px auto;
+}
