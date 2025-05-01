@@ -94,22 +94,27 @@ function showHint(number) {
 
 async function saveResult(boxId, guesses) {
   const name = localStorage.getItem("playerName") || "Anonymous";
-  await fetch("https://script.google.com/macros/s/AKfycbyVtYkTMcSYbTzTFg1Zdt3iHzuqY2DgjHjz3HprNc0sYqNhPy6nvQ3ZjY2kL8IInYDNjA/exec", {
+  await fetch("https://sheetdb.io/api/v1/feed8u4d3akfc", {
     method: "POST",
-    body: JSON.stringify({ name, boxId, guesses })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data: [{ name, boxId, guesses, time: new Date().toISOString() }] })
   });
 }
 
 async function showLeaderboard() {
-  const res = await fetch("https://script.google.com/macros/s/AKfycbyVtYkTMcSYbTzTFg1Zdt3iHzuqY2DgjHjz3HprNc0sYqNhPy6nvQ3ZjY2kL8IInYDNjA/exec");
+  const res = await fetch("https://sheetdb.io/api/v1/feed8u4d3akfc");
   const data = await res.json();
+
+  const results = data.sort((a, b) => a.guesses - b.guesses);
   const list = document.getElementById("leaderboardList");
   list.innerHTML = "";
-  data.forEach(r => {
+
+  results.forEach(r => {
     const li = document.createElement("li");
     li.textContent = `${r.name} – Box ${r.boxId}: ${r.guesses} guess(es) – ${new Date(r.time).toLocaleString()}`;
     list.appendChild(li);
   });
+
   showScreen("leaderboard-screen");
 }
 
