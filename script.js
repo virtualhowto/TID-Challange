@@ -1,4 +1,4 @@
-// Full patched script.js with name tracking and TID logic
+// Full patched script.js with name tracking and TID logic + updated data.json structure
 let boxData = [], currentBox = null, guessCount = 0, commonTIDs = {};
 
 async function loadData() {
@@ -7,7 +7,6 @@ async function loadData() {
   boxData = (await boxRes.json()).boxes;
   commonTIDs = await tidRes.json();
 }
-loadData();
 
 function showScreen(id) {
   document.querySelectorAll(".screen").forEach(s => s.classList.add("hidden"));
@@ -49,9 +48,9 @@ function setupChoices() {
   document.getElementById("hintVideo").src = "";
   document.getElementById("hint-container").classList.add("hidden");
 
-  const options = [currentBox.name];
+  const options = [currentBox.description];
   while (options.length < 5) {
-    const rand = boxData[Math.floor(Math.random() * boxData.length)].name;
+    const rand = boxData[Math.floor(Math.random() * boxData.length)].description;
     if (!options.includes(rand)) options.push(rand);
   }
   options.sort(() => Math.random() - 0.5);
@@ -66,7 +65,7 @@ function setupChoices() {
 
 function checkGuess(choice, button) {
   guessCount++;
-  if (choice === currentBox.name) {
+  if (choice === currentBox.description) {
     document.getElementById("correctSound").play();
     document.getElementById("itemImage").src = currentBox.itemImage;
     document.getElementById("itemDescription").innerText = currentBox.description;
@@ -126,11 +125,8 @@ function showTID(modelKey) {
     : `No TID available for ${modelKey.replace(/_/g, " ")}`;
 }
 
-// Auto-load from URL param or start QR scan
-
 document.addEventListener("DOMContentLoaded", async () => {
-  await loadData(); // ✅ wait for data.json and TID map
-
+  await loadData();
   const params = new URLSearchParams(window.location.search);
   const boxId = params.get("box");
 
