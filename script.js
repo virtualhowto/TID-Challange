@@ -94,13 +94,22 @@ function showHint(number) {
 
 async function saveResult(boxId, guesses) {
   const name = localStorage.getItem("playerName") || "Anonymous";
+  const payload = {
+    data: [
+      {
+        name: String(name),
+        boxId: String(boxId),
+        guesses: String(guesses),
+        time: new Date().toISOString()
+      }
+    ]
+  };
   await fetch("https://sheetdb.io/api/v1/feed8u4d3akfc", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ data: [{ name, boxId, guesses, time: new Date().toISOString() }] })
+    body: JSON.stringify(payload)
   });
 }
-
 async function showLeaderboard() {
   const res = await fetch("https://sheetdb.io/api/v1/feed8u4d3akfc");
   const data = await res.json();
