@@ -128,7 +128,9 @@ function showTID(modelKey) {
 
 // Auto-load from URL param or start QR scan
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadData(); // ✅ wait for data.json and TID map
+
   const params = new URLSearchParams(window.location.search);
   const boxId = params.get("box");
 
