@@ -110,20 +110,27 @@ async function saveResult(boxId, guesses) {
     body: JSON.stringify(payload)
   });
 }
+
 async function showLeaderboard() {
   try {
     const res = await fetch("https://sheetdb.io/api/v1/feed8u4d3akfc");
     if (!res.ok) throw new Error("SheetDB fetch failed");
 
     const data = await res.json();
-    const results = data.sort((a, b) => parseInt(a.guesses) - parseInt(b.guesses));
+    const valid = data.filter(r => r.name && r.boxId && r.guesses);
+    const sorted = valid.sort((a, b) => parseInt(a.guesses) - parseInt(b.guesses));
+
     const list = document.getElementById("leaderboardList");
     list.innerHTML = "";
 
-    results.forEach(r => {
+    sorted.forEach(r => {
+      const name = r.name || "Unknown";
+      const box = r.boxId || "—";
+      const guesses = r.guesses || "?";
+      const time = r.time ? new Date(r.time).toLocaleString() : "";
+
       const li = document.createElement("li");
-      const timestamp = r.time ? new Date(r.time).toLocaleString() : "";
-      li.textContent = `${r.name} – Box ${r.boxId}: ${r.guesses} guess(es) – ${timestamp}`;
+      li.textContent = `${name} – Box ${box}: ${guesses} guess(es) – ${time}`;
       list.appendChild(li);
     });
 
