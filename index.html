@@ -12,22 +12,16 @@
   <script defer src="script.js"></script>
 </head>
 <body>
-
   <!-- Landing Screen -->
   <div id="landing-screen" class="screen active">
     <img src="tid-logo.png" alt="TID Challenge Logo" class="logo" />
     <h1>Welcome to the TID Challenge!</h1>
     <p>Use your metal detector to guess what’s inside the box by scanning its QR code.</p>
-    <ul>
-      <li>Each box contains a hidden coin</li>
-      <li>Make a guess from 5 options</li>
-      <li>Wrong guess? Get hints to help identify the object</li>
-      <li>Lowest guesses wins 🏆</li>
-    </ul>
-    <button onclick="showScreen('start-screen')">Start</button>
+    <input type="text" id="playerName" placeholder="Enter your name" />
+    <button onclick="startWithName()">Start</button>
   </div>
 
-  <!-- Scan or Manual Entry Screen -->
+  <!-- Start Screen -->
   <div id="start-screen" class="screen hidden">
     <h2>Scan a QR Code or Enter Box ID</h2>
     <div id="qr-reader" style="width:300px; margin:auto;"></div>
@@ -40,21 +34,17 @@
   <div id="guess-screen" class="screen hidden">
     <h2>What’s in the Box?</h2>
     <div id="choices"></div>
-
-    <!-- Hint Buttons -->
     <div id="hint-buttons" class="hidden">
       <button onclick="showHint(1)" class="hidden">Show Hint 1</button>
       <button onclick="showHint(2)" class="hidden">Show Hint 2</button>
       <button onclick="selectDetectorModel()" class="hidden">Show TID Hint</button>
     </div>
-
-    <!-- Hint Video -->
     <div id="hint-container" class="hidden">
       <video id="hintVideo" width="300" controls></video>
     </div>
   </div>
 
-  <!-- TID Detector Model Selection -->
+  <!-- Detector Model Screen -->
   <div id="model-screen" class="screen hidden">
     <h3>Select Your Detector</h3>
     <div id="modelChoices">
@@ -84,9 +74,8 @@
     <button onclick="showScreen('start-screen')">Home</button>
   </div>
 
-  <!-- Audio Feedback -->
+  <!-- Audio -->
   <audio id="correctSound" src="correct.mp3"></audio>
   <audio id="wrongSound" src="wrong.mp3"></audio>
-
 </body>
 </html>
