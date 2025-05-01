@@ -1,213 +1,135 @@
 {
-  "coins": [
-    {
-      "name": "$2 Coin",
-      "composition": "Aluminium-Bronze",
-      "tid": {
-        "equinox_600_800": 21,
-        "equinox_700_900": "62–65",
-        "manticore": "62–65",
-        "xp_orx": 86,
-        "xp_deus_ii": 86
-      }
-    },
-    {
-      "name": "$1 Coin",
-      "composition": "Aluminium-Bronze",
-      "tid": {
-        "equinox_600_800": 22,
-        "equinox_700_900": "72–73",
-        "manticore": "72–73",
-        "xp_orx": 88,
-        "xp_deus_ii": 88
-      }
-    },
-    {
-      "name": "50c Coin",
-      "composition": "Cupro-Nickel",
-      "tid": {
-        "equinox_600_800": 17,
-        "equinox_700_900": "46–47",
-        "manticore": "46–47",
-        "xp_orx": 77,
-        "xp_deus_ii": 77
-      }
-    },
-    {
-      "name": "20c Coin",
-      "composition": "Cupro-Nickel",
-      "tid": {
-        "equinox_600_800": 16,
-        "equinox_700_900": 40,
-        "manticore": 40,
-        "xp_orx": 74,
-        "xp_deus_ii": 74
-      }
-    },
-    {
-      "name": "10c Coin",
-      "composition": "Cupro-Nickel",
-      "tid": {
-        "equinox_600_800": 13,
-        "equinox_700_900": "27–28",
-        "manticore": "27–28",
-        "xp_orx": 70,
-        "xp_deus_ii": 70
-      }
-    },
-    {
-      "name": "5c Coin",
-      "composition": "Cupro-Nickel",
-      "tid": {
-        "equinox_600_800": 10,
-        "equinox_700_900": 18,
-        "manticore": 18,
-        "xp_orx": 65,
-        "xp_deus_ii": 65
-      }
-    },
-    {
-      "name": "2c Coin",
-      "composition": "Bronze",
-      "tid": {
-        "equinox_600_800": 25,
-        "equinox_700_900": "66–67",
-        "manticore": "66–67",
-        "xp_orx": 90,
-        "xp_deus_ii": 90
-      }
-    },
-    {
-      "name": "1c Coin",
-      "composition": "Bronze",
-      "tid": {
-        "equinox_600_800": 22,
-        "equinox_700_900": "66–67",
-        "manticore": "66–67",
-        "xp_orx": 89,
-        "xp_deus_ii": 89
-      }
-    },
-    {
-      "name": "1966 Round 50c",
-      "composition": "80% Silver",
-      "tid": {
-        "equinox_600_800": 34,
-        "equinox_700_900": 94,
-        "manticore": 94,
-        "xp_orx": 95,
-        "xp_deus_ii": 95
-      }
-    },
-    {
-      "name": "Florin (Pre-1946)",
-      "composition": "92.5% Silver",
-      "tid": {
-        "equinox_600_800": 26,
-        "equinox_700_900": 94,
-        "manticore": 94,
-        "xp_orx": 94,
-        "xp_deus_ii": 94
-      }
-    },
-    {
-      "name": "Florin (Post-1946)",
-      "composition": "50% Silver",
-      "tid": {
-        "equinox_600_800": 26,
-        "equinox_700_900": 80,
-        "manticore": 80,
-        "xp_orx": 90,
-        "xp_deus_ii": 90
-      }
-    },
-    {
-      "name": "Shilling (Pre-1946)",
-      "composition": "92.5% Silver",
-      "tid": {
-        "equinox_600_800": 22,
-        "equinox_700_900": 90,
-        "manticore": 90,
-        "xp_orx": 91,
-        "xp_deus_ii": 91
-      }
-    },
-    {
-      "name": "Shilling (Post-1946)",
-      "composition": "50% Silver",
-      "tid": {
-        "equinox_600_800": 22,
-        "equinox_700_900": 70,
-        "manticore": 70,
-        "xp_orx": 85,
-        "xp_deus_ii": 85
-      }
-    },
-    {
-      "name": "Sixpence (Pre-1946)",
-      "composition": "92.5% Silver",
-      "tid": {
-        "equinox_600_800": "19–20",
-        "equinox_700_900": 77,
-        "manticore": 77,
-        "xp_orx": 88,
-        "xp_deus_ii": 88
-      }
-    },
-    {
-      "name": "Sixpence (Post-1946)",
-      "composition": "50% Silver",
-      "tid": {
-        "equinox_600_800": "19–20",
-        "equinox_700_900": 54,
-        "manticore": 54,
-        "xp_orx": 80,
-        "xp_deus_ii": 80
-      }
-    },
-    {
-      "name": "Threepence (Pre-1946)",
-      "composition": "92.5% Silver",
-      "tid": {
-        "equinox_600_800": 16,
-        "equinox_700_900": 65,
-        "manticore": 65,
-        "xp_orx": 84,
-        "xp_deus_ii": 84
-      }
-    },
-    {
-      "name": "Threepence (Post-1946)",
-      "composition": "50% Silver",
-      "tid": {
-        "equinox_600_800": 16,
-        "equinox_700_900": 40,
-        "manticore": 40,
-        "xp_orx": 76,
-        "xp_deus_ii": 76
-      }
-    },
-    {
-      "name": "Penny",
-      "composition": "Bronze",
-      "tid": {
-        "equinox_600_800": 22,
-        "equinox_700_900": 70,
-        "manticore": 70,
-        "xp_orx": 89,
-        "xp_deus_ii": 89
-      }
-    },
-    {
-      "name": "Halfpenny",
-      "composition": "Bronze",
-      "tid": {
-        "equinox_600_800": 22,
-        "equinox_700_900": "52–53",
-        "manticore": "52–53",
-        "xp_orx": 87,
-        "xp_deus_ii": 87
-      }
-    }
-  ]
+  "2_coin_aluminium_bronze": {
+    "equinox_600_800": 21,
+    "equinox_700_900": "62\u201365",
+    "manticore": "62\u201365",
+    "xp_orx": 86,
+    "xp_deus_ii": 86
+  },
+  "1_coin_aluminium_bronze": {
+    "equinox_600_800": 22,
+    "equinox_700_900": "72\u201373",
+    "manticore": "72\u201373",
+    "xp_orx": 88,
+    "xp_deus_ii": 88
+  },
+  "50c_coin_cupro_nickel": {
+    "equinox_600_800": 17,
+    "equinox_700_900": "46\u201347",
+    "manticore": "46\u201347",
+    "xp_orx": 77,
+    "xp_deus_ii": 77
+  },
+  "20c_coin_cupro_nickel": {
+    "equinox_600_800": 16,
+    "equinox_700_900": 40,
+    "manticore": 40,
+    "xp_orx": 74,
+    "xp_deus_ii": 74
+  },
+  "10c_coin_cupro_nickel": {
+    "equinox_600_800": 13,
+    "equinox_700_900": "27\u201328",
+    "manticore": "27\u201328",
+    "xp_orx": 70,
+    "xp_deus_ii": 70
+  },
+  "5c_coin_cupro_nickel": {
+    "equinox_600_800": 10,
+    "equinox_700_900": 18,
+    "manticore": 18,
+    "xp_orx": 65,
+    "xp_deus_ii": 65
+  },
+  "2c_coin_bronze": {
+    "equinox_600_800": 25,
+    "equinox_700_900": "66\u201367",
+    "manticore": "66\u201367",
+    "xp_orx": 90,
+    "xp_deus_ii": 90
+  },
+  "1c_coin_bronze": {
+    "equinox_600_800": 22,
+    "equinox_700_900": "66\u201367",
+    "manticore": "66\u201367",
+    "xp_orx": 89,
+    "xp_deus_ii": 89
+  },
+  "1966_round_50c_80_silver": {
+    "equinox_600_800": 34,
+    "equinox_700_900": 94,
+    "manticore": 94,
+    "xp_orx": 95,
+    "xp_deus_ii": 95
+  },
+  "florin_pre_1946_92_5_silver": {
+    "equinox_600_800": 26,
+    "equinox_700_900": 94,
+    "manticore": 94,
+    "xp_orx": 94,
+    "xp_deus_ii": 94
+  },
+  "florin_post_1946_50_silver": {
+    "equinox_600_800": 26,
+    "equinox_700_900": 80,
+    "manticore": 80,
+    "xp_orx": 90,
+    "xp_deus_ii": 90
+  },
+  "shilling_pre_1946_92_5_silver": {
+    "equinox_600_800": 22,
+    "equinox_700_900": 90,
+    "manticore": 90,
+    "xp_orx": 91,
+    "xp_deus_ii": 91
+  },
+  "shilling_post_1946_50_silver": {
+    "equinox_600_800": 22,
+    "equinox_700_900": 70,
+    "manticore": 70,
+    "xp_orx": 85,
+    "xp_deus_ii": 85
+  },
+  "sixpence_pre_1946_92_5_silver": {
+    "equinox_600_800": "19\u201320",
+    "equinox_700_900": 77,
+    "manticore": 77,
+    "xp_orx": 88,
+    "xp_deus_ii": 88
+  },
+  "sixpence_post_1946_50_silver": {
+    "equinox_600_800": "19\u201320",
+    "equinox_700_900": 54,
+    "manticore": 54,
+    "xp_orx": 80,
+    "xp_deus_ii": 80
+  },
+  "threepence_pre_1946_92_5_silver": {
+    "equinox_600_800": 16,
+    "equinox_700_900": 65,
+    "manticore": 65,
+    "xp_orx": 84,
+    "xp_deus_ii": 84
+  },
+  "threepence_post_1946_50_silver": {
+    "equinox_600_800": 16,
+    "equinox_700_900": 40,
+    "manticore": 40,
+    "xp_orx": 76,
+    "xp_deus_ii": 76
+  },
+  "penny_bronze": {
+    "equinox_600_800": 22,
+    "equinox_700_900": 70,
+    "manticore": 70,
+    "xp_orx": 89,
+    "xp_deus_ii": 89
+  },
+  "halfpenny_bronze": {
+    "equinox_600_800": 22,
+    "equinox_700_900": "52\u201353",
+    "manticore": "52\u201353",
+    "xp_orx": 87,
+    "xp_deus_ii": 87
+  }
 }
