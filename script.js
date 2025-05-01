@@ -114,14 +114,34 @@ function showTID(modelKey) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const qrScanner = new Html5Qrcode("qr-reader");
-  qrScanner.start(
-    { facingMode: "environment" },
-    { fps: 10, qrbox: 250 },
-    (decodedText) => {
-      qrScanner.stop();
-      loadChallenge(decodedText.trim());
-    },
-    (errorMessage) => {}
-  ).catch(err => console.error(err));
+  const params = new URLSearchParams(window.location.search);
+  const boxId = params.get("box");
+
+  if (boxId) {
+    // Auto-start the challenge and skip landing
+    currentBox = boxData.find(b => b.id === boxId);
+    guessCount = 0;
+    if (currentBox) {
+      setupChoices();
+      showScreen("guess-screen");
+    } else {
+      alert("Box not found.");
+    }
+  } else {
+    // Start QR scanner as usual
+    const qrScanner = new Html5Qrcode("qr-reader");
+    qrScanner.start(
+      { facingMode: "environment" },
+      { fps: 10, qrbox: 250 },
+      (decodedText) => {
+        qrScanner.stop();
+        loadChallenge(decodedText.trim());
+      },
+      (errorMessage) => {}
+    ).catch(err => {
+      console.error("Camera error:", err);
+      alert("Camera not found or denied. Enter Box ID manually.");
+      document.getElementById("qr-reader").style.display = "none";
+    });
+  }
 });
