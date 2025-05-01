@@ -1,3 +1,4 @@
+// Full patched script.js with name tracking and TID logic
 let boxData = [], currentBox = null, guessCount = 0, commonTIDs = {};
 
 async function loadData() {
@@ -11,6 +12,16 @@ loadData();
 function showScreen(id) {
   document.querySelectorAll(".screen").forEach(s => s.classList.add("hidden"));
   document.getElementById(id).classList.remove("hidden");
+}
+
+function startWithName() {
+  const name = document.getElementById("playerName").value.trim();
+  if (!name) {
+    alert("Please enter your name");
+    return;
+  }
+  localStorage.setItem("playerName", name);
+  showScreen("start-screen");
 }
 
 function startChallenge() {
@@ -83,8 +94,9 @@ function showHint(number) {
 }
 
 function saveResult(boxId, guesses) {
+  const name = localStorage.getItem("playerName") || "Anonymous";
   const results = JSON.parse(localStorage.getItem("results") || "[]");
-  results.push({ boxId, guesses, time: new Date().toISOString() });
+  results.push({ boxId, guesses, name, time: new Date().toISOString() });
   localStorage.setItem("results", JSON.stringify(results));
 }
 
@@ -95,7 +107,7 @@ function showLeaderboard() {
   list.innerHTML = "";
   results.forEach(r => {
     const li = document.createElement("li");
-    li.textContent = `Box ${r.boxId}: ${r.guesses} guess(es) - ${new Date(r.time).toLocaleString()}`;
+    li.textContent = `${r.name} – Box ${r.boxId}: ${r.guesses} guess(es) – ${new Date(r.time).toLocaleString()}`;
     list.appendChild(li);
   });
   showScreen("leaderboard-screen");
@@ -107,18 +119,20 @@ function selectDetectorModel() {
 }
 
 function showTID(modelKey) {
-  const coinName = currentBox.name.toLowerCase().replace(/[^\w]+/g, "_");
-  const match = Object.entries(commonTIDs).find(([key]) => coinName.includes(key));
-  const tid = match?.[1]?.[modelKey] || "No TID available for this detector.";
-  document.getElementById("tidResult").innerText = `Expected TID for ${modelKey.replace(/_/g, " ")}: ${tid}`;
+  const key = currentBox.tidKey;
+  const tid = commonTIDs[key]?.[modelKey];
+  document.getElementById("tidResult").innerText = tid
+    ? `Expected TID for ${modelKey.replace(/_/g, " ")}: ${tid}`
+    : `No TID available for ${modelKey.replace(/_/g, " ")}`;
 }
+
+// Auto-load from URL param or start QR scan
 
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const boxId = params.get("box");
 
   if (boxId) {
-    // Auto-start the challenge and skip landing
     currentBox = boxData.find(b => b.id === boxId);
     guessCount = 0;
     if (currentBox) {
@@ -128,7 +142,6 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Box not found.");
     }
   } else {
-    // Start QR scanner as usual
     const qrScanner = new Html5Qrcode("qr-reader");
     qrScanner.start(
       { facingMode: "environment" },
