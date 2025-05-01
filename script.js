@@ -94,14 +94,14 @@ function showHint(number) {
 
 async function saveResult(boxId, guesses) {
   const name = localStorage.getItem("playerName") || "Anonymous";
-  await fetch("https://script.google.com/macros/s/AKfycbz5UNkhExAdWpcWh40h-uiCgcFt0aCumdvWh-kW5sq20dqaKocu6a_b_sIm26ZrjoJiYw/exec", {
+  await fetch("https://script.google.com/macros/s/AKfycbyVtYkTMcSYbTzTFg1Zdt3iHzuqY2DgjHjz3HprNc0sYqNhPy6nvQ3ZjY2kL8IInYDNjA/exec", {
     method: "POST",
     body: JSON.stringify({ name, boxId, guesses })
   });
 }
 
 async function showLeaderboard() {
-  const res = await fetch("https://script.google.com/macros/s/AKfycbz5UNkhExAdWpcWh40h-uiCgcFt0aCumdvWh-kW5sq20dqaKocu6a_b_sIm26ZrjoJiYw/exec");
+  const res = await fetch("https://script.google.com/macros/s/AKfycbyVtYkTMcSYbTzTFg1Zdt3iHzuqY2DgjHjz3HprNc0sYqNhPy6nvQ3ZjY2kL8IInYDNjA/exec");
   const data = await res.json();
   const list = document.getElementById("leaderboardList");
   list.innerHTML = "";
