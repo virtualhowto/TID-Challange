@@ -100,12 +100,12 @@ async function saveResult(boxId, guesses) {
   });
 }
 
-function showLeaderboard() {
-  const results = JSON.parse(localStorage.getItem("results") || "[]");
-  results.sort((a, b) => a.guesses - b.guesses);
+async function showLeaderboard() {
+  const res = await fetch("https://script.google.com/macros/s/AKfycbz5UNkhExAdWpcWh40h-uiCgcFt0aCumdvWh-kW5sq20dqaKocu6a_b_sIm26ZrjoJiYw/exec");
+  const data = await res.json();
   const list = document.getElementById("leaderboardList");
   list.innerHTML = "";
-  results.forEach(r => {
+  data.forEach(r => {
     const li = document.createElement("li");
     li.textContent = `${r.name} – Box ${r.boxId}: ${r.guesses} guess(es) – ${new Date(r.time).toLocaleString()}`;
     list.appendChild(li);
