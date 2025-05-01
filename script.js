@@ -92,11 +92,12 @@ function showHint(number) {
   document.getElementById("hint-container").classList.remove("hidden");
 }
 
-function saveResult(boxId, guesses) {
+async function saveResult(boxId, guesses) {
   const name = localStorage.getItem("playerName") || "Anonymous";
-  const results = JSON.parse(localStorage.getItem("results") || "[]");
-  results.push({ boxId, guesses, name, time: new Date().toISOString() });
-  localStorage.setItem("results", JSON.stringify(results));
+  await fetch("https://script.google.com/macros/s/AKfycbz5UNkhExAdWpcWh40h-uiCgcFt0aCumdvWh-kW5sq20dqaKocu6a_b_sIm26ZrjoJiYw/exec", {
+    method: "POST",
+    body: JSON.stringify({ name, boxId, guesses })
+  });
 }
 
 function showLeaderboard() {
