@@ -111,20 +111,27 @@ async function saveResult(boxId, guesses) {
   });
 }
 async function showLeaderboard() {
-  const res = await fetch("https://sheetdb.io/api/v1/feed8u4d3akfc");
-  const data = await res.json();
+  try {
+    const res = await fetch("https://sheetdb.io/api/v1/feed8u4d3akfc");
+    if (!res.ok) throw new Error("SheetDB fetch failed");
 
-  const results = data.sort((a, b) => a.guesses - b.guesses);
-  const list = document.getElementById("leaderboardList");
-  list.innerHTML = "";
+    const data = await res.json();
+    const results = data.sort((a, b) => parseInt(a.guesses) - parseInt(b.guesses));
+    const list = document.getElementById("leaderboardList");
+    list.innerHTML = "";
 
-  results.forEach(r => {
-    const li = document.createElement("li");
-    li.textContent = `${r.name} – Box ${r.boxId}: ${r.guesses} guess(es) – ${new Date(r.time).toLocaleString()}`;
-    list.appendChild(li);
-  });
+    results.forEach(r => {
+      const li = document.createElement("li");
+      const timestamp = r.time ? new Date(r.time).toLocaleString() : "";
+      li.textContent = `${r.name} – Box ${r.boxId}: ${r.guesses} guess(es) – ${timestamp}`;
+      list.appendChild(li);
+    });
 
-  showScreen("leaderboard-screen");
+    showScreen("leaderboard-screen");
+  } catch (err) {
+    console.error("Leaderboard fetch error:", err);
+    alert("Could not load leaderboard.");
+  }
 }
 
 function selectDetectorModel() {
