@@ -26,11 +26,17 @@ function startWithName() {
 }
 function selectDetector(model) {
   document.getElementById("detectorModel").value = model;
-  document.querySelectorAll("#detectorButtons button").forEach(btn => btn.classList.remove("selected"));
-  const btn = Array.from(document.querySelectorAll("#detectorButtons button"))
-    .find(b => b.textContent.includes(model.replace(/_/g, " ")));
-  if (btn) btn.classList.add("selected");
+
+  document.querySelectorAll("#detectorButtons button").forEach(btn =>
+    btn.classList.remove("selected")
+  );
+
+  const selectedButton = Array.from(document.querySelectorAll("#detectorButtons button"))
+    .find(b => b.getAttribute("onclick")?.includes(model));
+    
+  if (selectedButton) selectedButton.classList.add("selected");
 }
+
 function startChallenge() {
   const id = document.getElementById("boxIdInput").value.trim();
   loadChallenge(id);
