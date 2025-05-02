@@ -15,7 +15,39 @@
     <div id="qr-reader" style="width: 300px; margin-top: 20px;"></div>
   </div>
 
-  <!-- Additional game screens will be shown dynamically by script.js -->
+  <div class="screen hidden" id="guess-screen">
+    <h2>What’s in the box?</h2>
+    <div id="choices"></div>
+    <div id="hint-buttons" class="hidden">
+      <button onclick="showHint(1)" class="hidden">Hint 1</button>
+      <button onclick="showHint(2)" class="hidden">Hint 2</button>
+      <button onclick="showTID()" class="hidden">Show TID Hint</button>
+    </div>
+    <div id="hint-container" class="hidden">
+      <video id="hintVideo" controls></video>
+    </div>
+  </div>
+
+  <div class="screen hidden" id="success-screen">
+    <h2>Correct!</h2>
+    <img id="itemImage" src="" alt="Item" />
+    <p id="itemDescription"></p>
+    <button onclick="showLeaderboard()">Show Leaderboard</button>
+  </div>
+
+  <div class="screen hidden" id="leaderboard-screen">
+    <h2>Leaderboard</h2>
+    <ul id="leaderboardList"></ul>
+    <button onclick="showScreen('start-screen')">Back</button>
+  </div>
+
+  <div class="modal hidden" id="tidModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeTIDModal()">&times;</span>
+      <p id="tidResult"></p>
+    </div>
+  </div>
+
   <script src="script.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -27,18 +59,28 @@
         return;
       }
 
-      const qrScanner = new Html5Qrcode("qr-reader");
-      qrScanner.start(
-        { facingMode: "environment" },
-        { fps: 10, qrbox: 250 },
-        (decodedText) => {
-          qrScanner.stop();
-          loadChallenge(decodedText.trim());
-        },
-        (errorMessage) => {}
-      ).catch(err => {
-        console.error("QR Scanner Error:", err);
-        alert("QR scanner failed to start. Enter Box ID manually.");
+      const qrReader = document.getElementById("qr-reader");
+
+      Html5Qrcode.getCameras().then(cameras => {
+        if (cameras.length > 0) {
+          const scanner = new Html5Qrcode("qr-reader");
+          scanner.start(
+            { facingMode: "environment" },
+            { fps: 10, qrbox: 250 },
+            (decodedText) => {
+              scanner.stop();
+              loadChallenge(decodedText.trim());
+            }
+          );
+        } else {
+          console.warn("No cameras found.");
+          qrReader.style.display = "none";
+          alert("No camera found. You can enter the Box ID manually.");
+        }
+      }).catch(err => {
+        console.error("Camera error:", err);
+        qrReader.style.display = "none";
+        alert("Camera not available or access denied. Use Box ID entry.");
       });
     });
   </script>
