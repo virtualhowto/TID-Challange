@@ -114,9 +114,10 @@ async function saveResult(boxId, guesses) {
 async function showLeaderboard() {
   try {
     const res = await fetch("https://sheetdb.io/api/v1/feed8u4d3akfc");
-    if (!res.ok) throw new Error("SheetDB fetch failed");
-
     const data = await res.json();
+
+    console.log("SheetDB Response:", data); // ✅ Debug log
+
     const valid = data.filter(r => r.name && r.boxId && r.guesses);
     const sorted = valid.sort((a, b) => parseInt(a.guesses) - parseInt(b.guesses));
 
@@ -124,22 +125,18 @@ async function showLeaderboard() {
     list.innerHTML = "";
 
     sorted.forEach(r => {
-      const name = r.name || "Unknown";
-      const box = r.boxId || "—";
-      const guesses = r.guesses || "?";
-      const time = r.time ? new Date(r.time).toLocaleString() : "";
-
       const li = document.createElement("li");
-      li.textContent = `${name} – Box ${box}: ${guesses} guess(es) – ${time}`;
+      li.textContent = `${r.name} – Box ${r.boxId}: ${r.guesses} guess(es) – ${new Date(r.time).toLocaleString()}`;
       list.appendChild(li);
     });
 
     showScreen("leaderboard-screen");
   } catch (err) {
-    console.error("Leaderboard fetch error:", err);
+    console.error("Leaderboard error:", err);
     alert("Could not load leaderboard.");
   }
 }
+
 
 function selectDetectorModel() {
   showScreen("model-screen");
