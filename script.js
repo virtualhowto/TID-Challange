@@ -1,4 +1,4 @@
-// Full patched script.js with name tracking and TID logic + updated data.json structure
+// Full patched script.js to store player name and detector model at start
 let boxData = [], currentBox = null, guessCount = 0, commonTIDs = {};
 
 async function loadData() {
@@ -15,11 +15,13 @@ function showScreen(id) {
 
 function startWithName() {
   const name = document.getElementById("playerName").value.trim();
-  if (!name) {
-    alert("Please enter your name");
+  const model = document.getElementById("detectorModel").value;
+  if (!name || !model) {
+    alert("Please enter your name and select your detector model");
     return;
   }
   localStorage.setItem("playerName", name);
+  localStorage.setItem("detectorModel", model);
   showScreen("start-screen");
 }
 
@@ -81,7 +83,7 @@ function checkGuess(choice, button) {
     } else if (guessCount === 2) {
       document.querySelector('button[onclick="showHint(2)"]').classList.remove("hidden");
     } else if (guessCount === 3) {
-      document.querySelector('button[onclick="selectDetectorModel()"]').classList.remove("hidden");
+      document.querySelector('button[onclick="showTID()"]')?.classList.remove("hidden");
     }
   }
 }
@@ -92,70 +94,50 @@ function showHint(number) {
   document.getElementById("hint-container").classList.remove("hidden");
 }
 
-async function saveResult(boxId, guesses) {
+function saveResult(boxId, guesses) {
   const name = localStorage.getItem("playerName") || "Anonymous";
-  const payload = {
-    data: [
-      {
-        name: String(name),
-        boxId: String(boxId),
-        guesses: String(guesses),
-        time: new Date().toISOString()
-      }
-    ]
-  };
-  await fetch("https://sheetdb.io/api/v1/feed8u4d3akfc", {
+  fetch("https://sheetdb.io/api/v1/feed8u4d3akfc", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
+    body: JSON.stringify({ data: [{ name, boxId, guesses: String(guesses), time: new Date().toISOString() }] })
   });
 }
 
-async function showLeaderboard() {
-  try {
-    const res = await fetch("https://sheetdb.io/api/v1/feed8u4d3akfc");
-    const data = await res.json();
-
-    console.log("SheetDB Response:", data); // ✅ Debug log
-
-    const valid = data.filter(r => r.name && r.boxId && r.guesses);
-    const sorted = valid.sort((a, b) => parseInt(a.guesses) - parseInt(b.guesses));
-
-    const list = document.getElementById("leaderboardList");
-    list.innerHTML = "";
-
-    sorted.forEach(r => {
-      const li = document.createElement("li");
-      li.textContent = `${r.name} – Box ${r.boxId}: ${r.guesses} guess(es) – ${new Date(r.time).toLocaleString()}`;
-      list.appendChild(li);
+function showLeaderboard() {
+  fetch("https://sheetdb.io/api/v1/feed8u4d3akfc")
+    .then(res => res.json())
+    .then(data => {
+      const list = document.getElementById("leaderboardList");
+      list.innerHTML = "";
+      data.sort((a, b) => parseInt(a.guesses) - parseInt(b.guesses));
+      data.forEach(r => {
+        const li = document.createElement("li");
+        const time = r.time ? new Date(r.time).toLocaleString() : "";
+        li.textContent = `${r.name} – Box ${r.boxId}: ${r.guesses} guess(es) – ${time}`;
+        list.appendChild(li);
+      });
+      showScreen("leaderboard-screen");
+    })
+    .catch(err => {
+      console.error("Leaderboard fetch error:", err);
+      alert("Could not load leaderboard.");
     });
-
-    showScreen("leaderboard-screen");
-  } catch (err) {
-    console.error("Leaderboard error:", err);
-    alert("Could not load leaderboard.");
-  }
 }
 
-
-function selectDetectorModel() {
-  showScreen("model-screen");
-  document.getElementById("tidResult").innerText = "";
-}
-
-function showTID(modelKey) {
+function showTID() {
+  const modelKey = localStorage.getItem("detectorModel");
   const key = currentBox.tidKey;
   const tid = commonTIDs[key]?.[modelKey];
   document.getElementById("tidResult").innerText = tid
     ? `Expected TID for ${modelKey.replace(/_/g, " ")}: ${tid}`
     : `No TID available for ${modelKey.replace(/_/g, " ")}`;
+  showScreen("model-screen");
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
   await loadData();
   const params = new URLSearchParams(window.location.search);
   const boxId = params.get("box");
-
   if (boxId) {
     currentBox = boxData.find(b => b.id === boxId);
     guessCount = 0;
