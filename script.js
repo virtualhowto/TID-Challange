@@ -108,12 +108,33 @@ function showHint(number) {
 
 function saveResult(boxId, guesses) {
   const name = localStorage.getItem("playerName") || "Anonymous";
+  const detectorModel = localStorage.getItem("detectorModel") || "Unknown";
+
+  const payload = {
+    data: [
+      {
+        name: String(name),
+        boxId: String(boxId),
+        guesses: String(guesses),
+        time: new Date().toISOString(),
+        detectorModel: detectorModel
+      }
+    ]
+  };
+
   fetch("https://sheetdb.io/api/v1/feed8u4d3akfc", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ data: [{ name, boxId, guesses: String(guesses), time: new Date().toISOString() }] })
+    body: JSON.stringify(payload)
+  }).then(res => {
+    if (!res.ok) {
+      res.text().then(text => console.error("SheetDB error:", text));
+    }
+  }).catch(err => {
+    console.error("Fetch failed:", err);
   });
 }
+
 
 function showLeaderboard() {
   fetch("https://sheetdb.io/api/v1/feed8u4d3akfc")
