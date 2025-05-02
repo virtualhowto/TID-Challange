@@ -109,3 +109,18 @@ input, button {
   background-color: #fff9ec;
 }
 
+#detectorButtons button {
+  padding: 10px 16px;
+  margin: 5px;
+  border: 2px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#detectorButtons button.selected {
+  border-color: orange;
+  background-color: #fff4e1;
+  color: black;
+  font-weight: bold;
+}
