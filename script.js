@@ -24,7 +24,13 @@ function startWithName() {
   localStorage.setItem("detectorModel", model);
   showScreen("start-screen");
 }
-
+function selectDetector(model) {
+  document.getElementById("detectorModel").value = model;
+  document.querySelectorAll("#detectorButtons button").forEach(btn => btn.classList.remove("selected"));
+  const btn = Array.from(document.querySelectorAll("#detectorButtons button"))
+    .find(b => b.textContent.includes(model.replace(/_/g, " ")));
+  if (btn) btn.classList.add("selected");
+}
 function startChallenge() {
   const id = document.getElementById("boxIdInput").value.trim();
   loadChallenge(id);
