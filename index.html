@@ -18,6 +18,14 @@
     <h1>Welcome to the TID Challenge!</h1>
     <p>Use your metal detector to guess what’s inside the box by scanning its QR code.</p>
     <input type="text" id="playerName" placeholder="Enter your name" />
+    <select id="detectorModel">
+      <option value="">Select your detector</option>
+      <option value="equinox_600_800">Equinox 600/800</option>
+      <option value="equinox_700_900">Equinox 700/900</option>
+      <option value="manticore">Manticore</option>
+      <option value="xp_orx">XP ORX</option>
+      <option value="xp_deus_ii">XP Deus II</option>
+    </select>
     <button onclick="startWithName()">Start</button>
   </div>
 
@@ -37,14 +45,14 @@
     <div id="hint-buttons" class="hidden">
       <button onclick="showHint(1)" class="hidden">Show Hint 1</button>
       <button onclick="showHint(2)" class="hidden">Show Hint 2</button>
-      <button onclick="selectDetectorModel()" class="hidden">Show TID Hint</button>
+      <button onclick="showTID()" class="hidden">Show TID Hint</button>
     </div>
     <div id="hint-container" class="hidden">
       <video id="hintVideo" width="300" controls></video>
     </div>
   </div>
 
-  <!-- Detector Model Screen -->
+  <!-- Detector Model Screen (deprecated) -->
   <div id="model-screen" class="screen hidden">
     <h3>Select Your Detector</h3>
     <div id="modelChoices">
