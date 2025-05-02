@@ -161,11 +161,18 @@ function showTID() {
   const modelKey = localStorage.getItem("detectorModel");
   const key = currentBox.tidKey;
   const tid = commonTIDs[key]?.[modelKey];
+
   document.getElementById("tidResult").innerText = tid
     ? `Expected TID for ${modelKey.replace(/_/g, " ")}: ${tid}`
     : `No TID available for ${modelKey.replace(/_/g, " ")}`;
-  showScreen("model-screen");
+
+  document.getElementById("tidModal").classList.remove("hidden");
 }
+
+function closeTIDModal() {
+  document.getElementById("tidModal").classList.add("hidden");
+}
+
 
 document.addEventListener("DOMContentLoaded", async () => {
   await loadData();
