@@ -1,24 +1,17 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TID Challenge</title>
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-  <script src="https://unpkg.com/html5-qrcode"></script>
-  <script defer src="script.js"></script>
+  <meta charset="UTF-8">
+  <title>TID Challenge – Welcome</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Landing Screen -->
-  <div id="landing-screen" class="screen active">
-    <img src="tid-logo.png" alt="TID Challenge Logo" class="logo" />
-    <h1>Welcome to the TID Challenge!</h1>
-    <p>Use your metal detector to guess what’s inside the box by scanning its QR code.</p>
+  <div class="screen active" id="landing-screen">
+    <h1>Welcome to the TID Challenge</h1>
     <input type="text" id="playerName" placeholder="Enter your name" />
     <div id="detectorButtons">
+      <p>Select your metal detector:</p>
       <button onclick="selectDetector('equinox_600_800')">Equinox 600/800</button>
       <button onclick="selectDetector('equinox_700_900')">Equinox 700/900</button>
       <button onclick="selectDetector('manticore')">Manticore</button>
@@ -26,72 +19,32 @@
       <button onclick="selectDetector('xp_deus_ii')">XP Deus II</button>
     </div>
     <input type="hidden" id="detectorModel" />
-    <button onclick="startWithName()">Start</button>
+    <br>
+    <button onclick="startWithName()">Start Challenge</button>
   </div>
 
-  <!-- Start Screen -->
-  <div id="start-screen" class="screen hidden">
-    <h2>Scan a QR Code or Enter Box ID</h2>
-    <div id="qr-reader" style="width:300px; margin:auto;"></div>
-    <input type="text" id="boxIdInput" placeholder="Enter Box ID" />
-    <button onclick="startChallenge()">Start</button>
-    <button onclick="showLeaderboard()">Leaderboard</button>
-  </div>
+  <script>
+    function selectDetector(model) {
+      document.getElementById("detectorModel").value = model;
+      document.querySelectorAll("#detectorButtons button").forEach(btn =>
+        btn.classList.remove("selected")
+      );
+      const selectedButton = Array.from(document.querySelectorAll("#detectorButtons button"))
+        .find(b => b.getAttribute("onclick")?.includes(model));
+      if (selectedButton) selectedButton.classList.add("selected");
+    }
 
-  <!-- Guessing Screen -->
-  <div id="guess-screen" class="screen hidden">
-    <h2>What’s in the Box?</h2>
-    <div id="choices"></div>
-    <div id="hint-buttons" class="hidden">
-      <button onclick="showHint(1)" class="hidden">Show Hint 1</button>
-      <button onclick="showHint(2)" class="hidden">Show Hint 2</button>
-      <button onclick="showTID()" class="hidden">Show TID Hint</button>
-    </div>
-    <div id="hint-container" class="hidden">
-      <video id="hintVideo" width="300" controls></video>
-    </div>
-  </div>
-
-  <!-- Detector Model Screen (deprecated) -->
-  <div id="model-screen" class="screen hidden">
-    <h3>Select Your Detector</h3>
-    <div id="modelChoices">
-      <button onclick="showTID('equinox_600_800')">Equinox 600/800</button>
-      <button onclick="showTID('equinox_700_900')">Equinox 700/900</button>
-      <button onclick="showTID('manticore')">Manticore</button>
-      <button onclick="showTID('xp_orx')">XP ORX</button>
-      <button onclick="showTID('xp_deus_ii')">XP Deus II</button>
-    </div>
-    <div id="tidResult"></div>
-    <button onclick="showScreen('guess-screen')">Back</button>
-  </div>
-
-  <!-- Success Screen -->
-  <div id="success-screen" class="screen hidden">
-    <h2>🎉 Correct!</h2>
-    <img id="itemImage" src="" alt="Item" />
-    <p id="itemDescription"></p>
-    <button onclick="showLeaderboard()">Leaderboard</button>
-    <button onclick="showScreen('start-screen')">Home</button>
-  </div>
-
-  <!-- Leaderboard Screen -->
-  <div id="leaderboard-screen" class="screen hidden">
-    <h2>🏆 Leaderboard</h2>
-    <ul id="leaderboardList"></ul>
-    <button onclick="showScreen('start-screen')">Home</button>
-  </div>
-
-  <!-- Audio -->
-  <audio id="correctSound" src="correct.mp3" preload="auto"></audio>
-  <audio id="wrongSound" src="wrong.mp3" preload="auto"></audio>
-
-  <div id="tidModal" class="modal hidden">
-  <div class="modal-content">
-    <span class="close" onclick="closeTIDModal()">&times;</span>
-    <p id="tidResult"></p>
-  </div>
-</div>
-
+    function startWithName() {
+      const name = document.getElementById("playerName").value.trim();
+      const model = document.getElementById("detectorModel").value;
+      if (!name || !model) {
+        alert("Please enter your name and select a detector model");
+        return;
+      }
+      localStorage.setItem("playerName", name);
+      localStorage.setItem("detectorModel", model);
+      window.location.href = "challenge.html";
+    }
+  </script>
 </body>
 </html>
