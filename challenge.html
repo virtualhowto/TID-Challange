@@ -49,40 +49,6 @@
   </div>
 
   <script src="script.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const name = localStorage.getItem("playerName");
-      const model = localStorage.getItem("detectorModel");
-      if (!name || !model) {
-        alert("Missing player information. Redirecting...");
-        window.location.href = "index.html";
-        return;
-      }
 
-      const qrReader = document.getElementById("qr-reader");
-
-      Html5Qrcode.getCameras().then(cameras => {
-        if (cameras.length > 0) {
-          const scanner = new Html5Qrcode("qr-reader");
-          scanner.start(
-            { facingMode: "environment" },
-            { fps: 10, qrbox: 250 },
-            (decodedText) => {
-              scanner.stop();
-              loadChallenge(decodedText.trim());
-            }
-          );
-        } else {
-          console.warn("No cameras found.");
-          qrReader.style.display = "none";
-          alert("No camera found. You can enter the Box ID manually.");
-        }
-      }).catch(err => {
-        console.error("Camera error:", err);
-        qrReader.style.display = "none";
-        alert("Camera not available or access denied. Use Box ID entry.");
-      });
-    });
-  </script>
 </body>
 </html>
