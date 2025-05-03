@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +7,12 @@
 </head>
 <body>
   <div class="screen active" id="landing-screen">
+    <img src="tid-logo.png" alt="TID Challenge Logo" style="max-width: 200px; margin-bottom: 20px;" />
     <h1>Welcome to the TID Challenge</h1>
+    <p>Use your metal detector skills to guess what's in the box!</p>
+
     <input type="text" id="playerName" placeholder="Enter your name" />
+
     <div id="detectorButtons">
       <p>Select your metal detector:</p>
       <button onclick="selectDetector('equinox_600_800')">Equinox 600/800</button>
@@ -18,7 +21,9 @@
       <button onclick="selectDetector('xp_orx')">XP ORX</button>
       <button onclick="selectDetector('xp_deus_ii')">XP Deus II</button>
     </div>
+
     <input type="hidden" id="detectorModel" />
+
     <br>
     <button onclick="startWithName()">Start Challenge</button>
   </div>
