@@ -63,20 +63,7 @@
   </div>
 
   <script src="script.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const name = localStorage.getItem("playerName");
-      const model = localStorage.getItem("detectorModel");
-      if (!name || !model) {
-        alert("Missing player information. Redirecting...");
-        window.location.href = "index.html";
-        return;
-      }
 
-      // Only show mode selection on load
-      showScreen("choose-box-screen");
-    });
-  </script>
 
 </body>
 </html>
