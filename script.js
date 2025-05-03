@@ -1,4 +1,3 @@
-// Full patched script.js to store player name and detector model at start
 let boxData = [], currentBox = null, guessCount = 0, commonTIDs = {};
 
 async function loadData() {
@@ -11,30 +10,6 @@ async function loadData() {
 function showScreen(id) {
   document.querySelectorAll(".screen").forEach(s => s.classList.add("hidden"));
   document.getElementById(id).classList.remove("hidden");
-}
-
-function startWithName() {
-  const name = document.getElementById("playerName").value.trim();
-  const model = document.getElementById("detectorModel").value;
-  if (!name || !model) {
-    alert("Please enter your name and select your detector model");
-    return;
-  }
-  localStorage.setItem("playerName", name);
-  localStorage.setItem("detectorModel", model);
-  showScreen("start-screen");
-}
-function selectDetector(model) {
-  document.getElementById("detectorModel").value = model;
-
-  document.querySelectorAll("#detectorButtons button").forEach(btn =>
-    btn.classList.remove("selected")
-  );
-
-  const selectedButton = Array.from(document.querySelectorAll("#detectorButtons button"))
-    .find(b => b.getAttribute("onclick")?.includes(model));
-    
-  if (selectedButton) selectedButton.classList.add("selected");
 }
 
 function startChallenge() {
@@ -80,13 +55,13 @@ function setupChoices() {
 function checkGuess(choice, button) {
   guessCount++;
   if (choice === currentBox.description) {
-    document.getElementById("correctSound").play();
+    document.getElementById("correctSound")?.play();
     document.getElementById("itemImage").src = currentBox.itemImage;
     document.getElementById("itemDescription").innerText = currentBox.description;
     saveResult(currentBox.id, guessCount);
     showScreen("success-screen");
   } else {
-    document.getElementById("wrongSound").play();
+    document.getElementById("wrongSound")?.play();
     button.classList.add("shake");
     setTimeout(() => button.classList.remove("shake"), 500);
 
@@ -95,7 +70,7 @@ function checkGuess(choice, button) {
     } else if (guessCount === 2) {
       document.querySelector('button[onclick="showHint(2)"]').classList.remove("hidden");
     } else if (guessCount === 3) {
-      document.querySelector('button[onclick="showTID()"]')?.classList.remove("hidden");
+      document.querySelector('button[onclick="showTID()"]').classList.remove("hidden");
     }
   }
 }
@@ -108,33 +83,15 @@ function showHint(number) {
 
 function saveResult(boxId, guesses) {
   const name = localStorage.getItem("playerName") || "Anonymous";
-  const detectorModel = localStorage.getItem("detectorModel") || "Unknown";
-
-  const payload = {
-    data: [
-      {
-        name: String(name),
-        boxId: String(boxId),
-        guesses: String(guesses),
-        time: new Date().toISOString(),
-        detectorModel: detectorModel
-      }
-    ]
-  };
-
+  const model = localStorage.getItem("detectorModel") || "Unknown";
   fetch("https://sheetdb.io/api/v1/feed8u4d3akfc", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  }).then(res => {
-    if (!res.ok) {
-      res.text().then(text => console.error("SheetDB error:", text));
-    }
-  }).catch(err => {
-    console.error("Fetch failed:", err);
+    body: JSON.stringify({
+      data: [{ name, boxId, guesses: String(guesses), model, time: new Date().toISOString() }]
+    })
   });
 }
-
 
 function showLeaderboard() {
   fetch("https://sheetdb.io/api/v1/feed8u4d3akfc")
@@ -144,9 +101,9 @@ function showLeaderboard() {
       list.innerHTML = "";
       data.sort((a, b) => parseInt(a.guesses) - parseInt(b.guesses));
       data.forEach(r => {
-        const li = document.createElement("li");
         const time = r.time ? new Date(r.time).toLocaleString() : "";
-        li.textContent = `${r.name} – Box ${r.boxId}: ${r.guesses} guess(es) – ${time}`;
+        const li = document.createElement("li");
+        li.textContent = `${r.name} (${r.model}) – Box ${r.boxId}: ${r.guesses} guess(es) – ${time}`;
         list.appendChild(li);
       });
       showScreen("leaderboard-screen");
@@ -161,11 +118,9 @@ function showTID() {
   const modelKey = localStorage.getItem("detectorModel");
   const key = currentBox.tidKey;
   const tid = commonTIDs[key]?.[modelKey];
-
   document.getElementById("tidResult").innerText = tid
     ? `Expected TID for ${modelKey.replace(/_/g, " ")}: ${tid}`
     : `No TID available for ${modelKey.replace(/_/g, " ")}`;
-
   document.getElementById("tidModal").classList.remove("hidden");
 }
 
@@ -173,34 +128,39 @@ function closeTIDModal() {
   document.getElementById("tidModal").classList.add("hidden");
 }
 
+// ✅ New: Button-based QR/code selection
+function showBoxIdInput() {
+  showScreen("start-screen");
+  document.getElementById("qr-reader").style.display = "none";
+}
+
+function startQRScanner() {
+  showScreen("start-screen");
+  const qrReader = document.getElementById("qr-reader");
+  qrReader.style.display = "block";
+
+  Html5Qrcode.getCameras().then(cameras => {
+    if (cameras.length > 0) {
+      const scanner = new Html5Qrcode("qr-reader");
+      scanner.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: 250 },
+        (decodedText) => {
+          scanner.stop();
+          loadChallenge(decodedText.trim());
+        }
+      );
+    } else {
+      qrReader.style.display = "none";
+      alert("No camera found. You can enter the Box ID manually.");
+    }
+  }).catch(err => {
+    console.error("QR Scanner Error:", err);
+    qrReader.style.display = "none";
+    alert("Camera not available. Use Box ID instead.");
+  });
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
   await loadData();
-  const params = new URLSearchParams(window.location.search);
-  const boxId = params.get("box");
-  if (boxId) {
-    currentBox = boxData.find(b => b.id === boxId);
-    guessCount = 0;
-    if (currentBox) {
-      setupChoices();
-      showScreen("guess-screen");
-    } else {
-      alert("Box not found.");
-    }
-  } else {
-    const qrScanner = new Html5Qrcode("qr-reader");
-    qrScanner.start(
-      { facingMode: "environment" },
-      { fps: 10, qrbox: 250 },
-      (decodedText) => {
-        qrScanner.stop();
-        loadChallenge(decodedText.trim());
-      },
-      (errorMessage) => {}
-    ).catch(err => {
-      console.error("Camera error:", err);
-      alert("Camera not found or denied. Enter Box ID manually.");
-      document.getElementById("qr-reader").style.display = "none";
-    });
-  }
 });
