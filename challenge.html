@@ -7,6 +7,9 @@
   <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
+  <header class="tid-header">
+  <img src="tid-logo.png" alt="TID Challenge Logo" class="tid-logo" />
+</header>
  <script src="script.js"></script>
   <!-- Choose method screen -->
   <div class="screen active" id="choose-box-screen">
@@ -31,9 +34,6 @@
       <button onclick="showHint(1)" class="hidden">Hint 1</button>
       <button onclick="showHint(2)" class="hidden">Hint 2</button>
       <button onclick="showTID()" class="hidden">Show TID Hint</button>
-    </div>
-    <div id="hint-container" class="hidden">
-      <video id="hintVideo" controls></video>
     </div>
   </div>
 
@@ -61,6 +61,14 @@
       <p id="tidResult"></p>
     </div>
   </div>
+
+  <!-- Hint Modal -->
+<div class="modal hidden" id="hintModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeHintModal()">&times;</span>
+    <video id="hintVideo" controls style="max-width: 100%; border-radius: 8px;"></video>
+  </div>
+</div>
 
  
 
