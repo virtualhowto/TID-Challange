@@ -168,4 +168,14 @@ function closeWinModal() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   await loadData();
+
+  const name = localStorage.getItem("playerName");
+  const model = localStorage.getItem("detectorModel");
+  if (!name || !model) {
+    alert("Missing player information. Redirecting...");
+    window.location.href = "index.html";
+    return;
+  }
+
+  showScreen("choose-box-screen"); // ✅ now runs after the function is defined
 });
