@@ -66,7 +66,7 @@ function checkGuess(choice, button) {
     button.classList.add("shake");
     setTimeout(() => button.classList.remove("shake"), 500);
 
-    if (guessCount === 1) {
+       if (guessCount === 1) {
       document.querySelector('button[onclick="showHint(1)"]').classList.remove("hidden");
     } else if (guessCount === 2) {
       document.querySelector('button[onclick="showHint(2)"]').classList.remove("hidden");
