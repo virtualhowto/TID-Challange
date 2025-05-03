@@ -1,5 +1,6 @@
 let boxData = [], currentBox = null, guessCount = 0, commonTIDs = {};
 
+// Load both data files
 async function loadData() {
   const boxRes = await fetch("data.json");
   const tidRes = await fetch("CommonTIDs.json");
@@ -7,16 +8,19 @@ async function loadData() {
   commonTIDs = await tidRes.json();
 }
 
+// Toggle screen visibility
 function showScreen(id) {
   document.querySelectorAll(".screen").forEach(s => s.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
+  document.getElementById(id)?.classList.remove("hidden");
 }
 
+// Start with manually entered Box ID
 function startChallenge() {
   const id = document.getElementById("boxIdInput").value.trim();
   loadChallenge(id);
 }
 
+// Load challenge data for a box
 function loadChallenge(boxId) {
   currentBox = boxData.find(b => b.id === boxId);
   guessCount = 0;
@@ -28,14 +32,19 @@ function loadChallenge(boxId) {
   showScreen("guess-screen");
 }
 
+// Setup guess options
 function setupChoices() {
   const choicesDiv = document.getElementById("choices");
-  choicesDiv.innerHTML = "";
   const hintButtons = document.getElementById("hint-buttons");
+
+  if (!choicesDiv || !hintButtons) {
+    console.error("Missing required elements for challenge UI.");
+    return;
+  }
+
+  choicesDiv.innerHTML = "";
   hintButtons.classList.remove("hidden");
   document.querySelectorAll("#hint-buttons button").forEach(btn => btn.classList.add("hidden"));
-  document.getElementById("hintVideo").src = "";
-  document.getElementById("hint-container").classList.add("hidden");
 
   const options = [currentBox.description];
   while (options.length < 5) {
@@ -52,35 +61,37 @@ function setupChoices() {
   });
 }
 
+// Process guess
 function checkGuess(choice, button) {
   guessCount++;
+
   if (choice === currentBox.description) {
     document.getElementById("correctSound")?.play();
     document.getElementById("itemImage").src = currentBox.itemImage;
     document.getElementById("itemDescription").innerText = currentBox.description;
     saveResult(currentBox.id, guessCount);
-    document.getElementById("winModal").classList.remove("hidden"); // Show modal
+    document.getElementById("winModal").classList.remove("hidden");
   } else {
     document.getElementById("wrongSound")?.play();
     button.classList.add("shake");
     setTimeout(() => button.classList.remove("shake"), 500);
 
     if (guessCount === 1) {
-      document.querySelector('button[onclick="showHint(1)"]').classList.remove("hidden");
+      document.querySelector('button[onclick="showHint(1)"]')?.classList.remove("hidden");
     } else if (guessCount === 2) {
-      document.querySelector('button[onclick="showHint(2)"]').classList.remove("hidden");
+      document.querySelector('button[onclick="showHint(2)"]')?.classList.remove("hidden");
     } else if (guessCount === 3) {
-      document.querySelector('button[onclick="showTID()"]').classList.remove("hidden");
+      document.querySelector('button[onclick="showTID()"]')?.classList.remove("hidden");
     }
   }
 }
 
+// Show hint video in modal
 function showHint(number) {
   const video = document.getElementById("hintVideo");
   video.src = number === 1 ? currentBox.hint1 : currentBox.hint2;
   document.getElementById("hintModal").classList.remove("hidden");
 }
-
 function closeHintModal() {
   const modal = document.getElementById("hintModal");
   const video = document.getElementById("hintVideo");
@@ -89,6 +100,12 @@ function closeHintModal() {
   modal.classList.add("hidden");
 }
 
+// Close win modal
+function closeWinModal() {
+  document.getElementById("winModal").classList.add("hidden");
+}
+
+// Submit result to SheetDB
 function saveResult(boxId, guesses) {
   const name = localStorage.getItem("playerName") || "Anonymous";
   const model = localStorage.getItem("detectorModel") || "Unknown";
@@ -109,6 +126,7 @@ function saveResult(boxId, guesses) {
   });
 }
 
+// Load leaderboard from SheetDB
 function showLeaderboard() {
   fetch("https://sheetdb.io/api/v1/feed8u4d3akfc")
     .then(res => res.json())
@@ -130,6 +148,7 @@ function showLeaderboard() {
     });
 }
 
+// Show expected TID modal
 function showTID() {
   const modelKey = localStorage.getItem("detectorModel");
   const key = currentBox.tidKey;
@@ -139,17 +158,15 @@ function showTID() {
     : `No TID available for ${modelKey.replace(/_/g, " ")}`;
   document.getElementById("tidModal").classList.remove("hidden");
 }
-
 function closeTIDModal() {
   document.getElementById("tidModal").classList.add("hidden");
 }
 
-// ✅ New: Button-based QR/code selection
+// Show manual entry or QR scanner
 function showBoxIdInput() {
   showScreen("start-screen");
   document.getElementById("qr-reader").style.display = "none";
 }
-
 function startQRScanner() {
   showScreen("start-screen");
   const qrReader = document.getElementById("qr-reader");
@@ -177,10 +194,7 @@ function startQRScanner() {
   });
 }
 
-function closeWinModal() {
-  document.getElementById("winModal").classList.add("hidden");
-}
-
+// Ensure DOM is ready before anything runs
 document.addEventListener("DOMContentLoaded", async () => {
   await loadData();
 
