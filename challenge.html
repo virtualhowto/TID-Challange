@@ -37,13 +37,15 @@
     </div>
   </div>
 
-  <!-- Correct screen -->
-  <div class="screen hidden" id="success-screen">
-    <h2>Correct!</h2>
-    <img id="itemImage" src="" alt="Item" />
+ <div class="modal hidden" id="winModal">
+  <div class="modal-content">
+    <h2>🎉 Correct!</h2>
+    <img id="itemImage" src="" alt="Item" style="max-width: 200px;" />
     <p id="itemDescription"></p>
-    <button onclick="showLeaderboard()">Show Leaderboard</button>
+    <button onclick="showLeaderboard()">View Leaderboard</button>
+    <button onclick="closeWinModal()">Close</button>
   </div>
+</div>
 
   <!-- Leaderboard screen -->
   <div class="screen hidden" id="leaderboard-screen">
