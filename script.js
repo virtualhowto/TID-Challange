@@ -162,6 +162,10 @@ function startQRScanner() {
   });
 }
 
+function closeWinModal() {
+  document.getElementById("winModal").classList.add("hidden");
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   await loadData();
 });
