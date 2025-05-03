@@ -1,12 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TID Challenge – Play</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/html5-qrcode"></script>
+</head>
 <body>
-  <!-- NEW: Choose how to start -->
+
+  <!-- Choose method screen -->
   <div class="screen active" id="choose-box-screen">
     <h2>How do you want to start?</h2>
     <button onclick="showBoxIdInput()">Enter Box ID</button>
     <button onclick="startQRScanner()">Scan QR Code</button>
   </div>
 
-  <!-- Existing start screen -->
+  <!-- Manual Box ID + QR scan screen -->
   <div class="screen hidden" id="start-screen">
     <h2>Enter Your Challenge Box ID</h2>
     <input type="text" id="boxIdInput" placeholder="Enter Box ID" />
@@ -14,7 +23,7 @@
     <div id="qr-reader" style="width: 300px; margin-top: 20px; display: none;"></div>
   </div>
 
-  <!-- Guessing screen -->
+  <!-- Challenge guessing screen -->
   <div class="screen hidden" id="guess-screen">
     <h2>What’s in the box?</h2>
     <div id="choices"></div>
@@ -28,7 +37,7 @@
     </div>
   </div>
 
-  <!-- Correct answer -->
+  <!-- Correct screen -->
   <div class="screen hidden" id="success-screen">
     <h2>Correct!</h2>
     <img id="itemImage" src="" alt="Item" />
@@ -36,14 +45,14 @@
     <button onclick="showLeaderboard()">Show Leaderboard</button>
   </div>
 
-  <!-- Leaderboard -->
+  <!-- Leaderboard screen -->
   <div class="screen hidden" id="leaderboard-screen">
     <h2>Leaderboard</h2>
     <ul id="leaderboardList"></ul>
     <button onclick="showScreen('choose-box-screen')">Back</button>
   </div>
 
-  <!-- TID Modal -->
+  <!-- TID modal -->
   <div class="modal hidden" id="tidModal">
     <div class="modal-content">
       <span class="close" onclick="closeTIDModal()">&times;</span>
@@ -52,7 +61,6 @@
   </div>
 
   <script src="script.js"></script>
-  <script src="https://unpkg.com/html5-qrcode"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const name = localStorage.getItem("playerName");
@@ -63,8 +71,10 @@
         return;
       }
 
-      // Land on choose screen by default
+      // Only show mode selection on load
       showScreen("choose-box-screen");
     });
   </script>
+
 </body>
+</html>
