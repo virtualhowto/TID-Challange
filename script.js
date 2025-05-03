@@ -55,18 +55,17 @@ function setupChoices() {
 function checkGuess(choice, button) {
   guessCount++;
   if (choice === currentBox.description) {
-  document.getElementById("correctSound")?.play();
-  document.getElementById("itemImage").src = currentBox.itemImage;
-  document.getElementById("itemDescription").innerText = currentBox.description;
-  saveResult(currentBox.id, guessCount);
-  document.getElementById("winModal").classList.remove("hidden");
-}
+    document.getElementById("correctSound")?.play();
+    document.getElementById("itemImage").src = currentBox.itemImage;
+    document.getElementById("itemDescription").innerText = currentBox.description;
+    saveResult(currentBox.id, guessCount);
+    document.getElementById("winModal").classList.remove("hidden"); // Show modal
   } else {
     document.getElementById("wrongSound")?.play();
     button.classList.add("shake");
     setTimeout(() => button.classList.remove("shake"), 500);
 
-       if (guessCount === 1) {
+    if (guessCount === 1) {
       document.querySelector('button[onclick="showHint(1)"]').classList.remove("hidden");
     } else if (guessCount === 2) {
       document.querySelector('button[onclick="showHint(2)"]').classList.remove("hidden");
