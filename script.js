@@ -55,11 +55,12 @@ function setupChoices() {
 function checkGuess(choice, button) {
   guessCount++;
   if (choice === currentBox.description) {
-    document.getElementById("correctSound")?.play();
-    document.getElementById("itemImage").src = currentBox.itemImage;
-    document.getElementById("itemDescription").innerText = currentBox.description;
-    saveResult(currentBox.id, guessCount);
-    showScreen("success-screen");
+  document.getElementById("correctSound")?.play();
+  document.getElementById("itemImage").src = currentBox.itemImage;
+  document.getElementById("itemDescription").innerText = currentBox.description;
+  saveResult(currentBox.id, guessCount);
+  document.getElementById("winModal").classList.remove("hidden");
+}
   } else {
     document.getElementById("wrongSound")?.play();
     button.classList.add("shake");
