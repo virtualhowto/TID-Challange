@@ -104,7 +104,7 @@ function showLeaderboard() {
       data.forEach(r => {
         const time = r.time ? new Date(r.time).toLocaleString() : "";
         const li = document.createElement("li");
-        li.textContent = `${r.name} (${r.model}) – Box ${r.boxId}: ${r.guesses} guess(es) – ${time}`;
+        li.textContent = `${r.name} – Box ${r.boxId}: ${r.guesses} guess(es) – ${time}`;
         list.appendChild(li);
       });
       showScreen("leaderboard-screen");
