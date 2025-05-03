@@ -173,7 +173,6 @@ function closeTIDModal() {
   document.getElementById("tidModal").classList.add("hidden");
 }
 
-
 document.addEventListener("DOMContentLoaded", async () => {
   await loadData();
   const params = new URLSearchParams(window.location.search);
