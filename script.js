@@ -140,12 +140,17 @@ function showLeaderboard() {
         li.textContent = `${r.Name} – Box ${r.BoxID}: ${r.Guesses} guess(es) – ${time}`;
         list.appendChild(li);
       });
-      showScreen("leaderboard-screen");
+      document.getElementById("winModal")?.classList.add("hidden"); // close win popup if open
+      document.getElementById("leaderboardModal").classList.remove("hidden");
     })
     .catch(err => {
       console.error("Leaderboard fetch error:", err);
       alert("Could not load leaderboard.");
     });
+}
+
+function closeLeaderboardModal() {
+  document.getElementById("leaderboardModal").classList.add("hidden");
 }
 
 // Show expected TID modal
