@@ -14,33 +14,13 @@
     <button onclick="startChallenge()">Start</button>
     <div id="qr-reader" style="width: 300px; margin-top: 20px;"></div>
   </div>
-
+<div class="modal hidden" id="tidModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeTIDModal()">&times;</span>
+    <p id="tidResult"></p>
+  </div>
+</div>
   <!-- Additional game screens will be shown dynamically by script.js -->
   <script src="script.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const name = localStorage.getItem("playerName");
-      const model = localStorage.getItem("detectorModel");
-      if (!name || !model) {
-        alert("Missing player information. Redirecting...");
-        window.location.href = "index.html";
-        return;
-      }
-
-      const qrScanner = new Html5Qrcode("qr-reader");
-      qrScanner.start(
-        { facingMode: "environment" },
-        { fps: 10, qrbox: 250 },
-        (decodedText) => {
-          qrScanner.stop();
-          loadChallenge(decodedText.trim());
-        },
-        (errorMessage) => {}
-      ).catch(err => {
-        console.error("QR Scanner Error:", err);
-        alert("QR scanner failed to start. Enter Box ID manually.");
-      });
-    });
-  </script>
 </body>
 </html>
