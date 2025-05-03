@@ -78,7 +78,15 @@ function checkGuess(choice, button) {
 function showHint(number) {
   const video = document.getElementById("hintVideo");
   video.src = number === 1 ? currentBox.hint1 : currentBox.hint2;
-  document.getElementById("hint-container").classList.remove("hidden");
+  document.getElementById("hintModal").classList.remove("hidden");
+}
+
+function closeHintModal() {
+  const modal = document.getElementById("hintModal");
+  const video = document.getElementById("hintVideo");
+  video.pause();
+  video.currentTime = 0;
+  modal.classList.add("hidden");
 }
 
 function saveResult(boxId, guesses) {
