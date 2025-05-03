@@ -157,3 +157,21 @@ input, button {
 .hidden {
   display: none;
 }
+.responsive-logo {
+  width: clamp(120px, 25vw, 240px);
+  height: auto;
+  display: block;
+  margin: 0 auto 20px;
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.15));
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 600px) {
+  .responsive-logo {
+    width: 50vw;
+  }
+}
+
+.responsive-logo:hover {
+  transform: scale(1.05);
+}
