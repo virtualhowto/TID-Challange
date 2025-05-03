@@ -84,11 +84,19 @@ function showHint(number) {
 function saveResult(boxId, guesses) {
   const name = localStorage.getItem("playerName") || "Anonymous";
   const model = localStorage.getItem("detectorModel") || "Unknown";
+  const timestamp = new Date().toISOString();
+
   fetch("https://sheetdb.io/api/v1/feed8u4d3akfc", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      data: [{ name, boxId, guesses: String(guesses), model, time: new Date().toISOString() }]
+      data: [{
+        Timestamp: timestamp,
+        Name: name,
+        BoxID: boxId,
+        Guesses: String(guesses),
+        detectorModel: model
+      }]
     })
   });
 }
@@ -99,11 +107,11 @@ function showLeaderboard() {
     .then(data => {
       const list = document.getElementById("leaderboardList");
       list.innerHTML = "";
-      data.sort((a, b) => parseInt(a.guesses) - parseInt(b.guesses));
+      data.sort((a, b) => parseInt(a.Guesses) - parseInt(b.Guesses));
       data.forEach(r => {
-        const time = r.time ? new Date(r.time).toLocaleString() : "";
+        const time = r.Timestamp ? new Date(r.Timestamp).toLocaleString() : "";
         const li = document.createElement("li");
-        li.textContent = `${r.name} – Box ${r.boxId}: ${r.guesses} guess(es) – ${time}`;
+        li.textContent = `${r.Name} – Box ${r.BoxID}: ${r.Guesses} guess(es) – ${time}`;
         list.appendChild(li);
       });
       showScreen("leaderboard-screen");
